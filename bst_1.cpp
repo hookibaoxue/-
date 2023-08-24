@@ -13,13 +13,13 @@ struct tree_node{
 tree_node * get_new_node(int data){
 	tree_node * temp = new tree_node();//new带括号，创建时会初始化
 	temp->data = data;
-	temp->left_node = NULL;
-	temp->right_node = NULL;
+	temp->left_node = nullptr;
+	temp->right_node = nullptr;
 	return temp;
 }
 
 tree_node * tree_insert_node(tree_node * root, int data){
-	if (root == NULL)
+	if (root == nullptr)
 		root = get_new_node(data);
 	else if (data <= root->data)
 		root->left_node = tree_insert_node(root->left_node, data);
@@ -30,7 +30,7 @@ tree_node * tree_insert_node(tree_node * root, int data){
 }
 
 bool search_for_node(tree_node * root, int search_num){
-	if (root == NULL)
+	if (root == nullptr)
 		return false;
 	if (root->data == search_num)
 		return true;
@@ -43,13 +43,13 @@ bool search_for_node(tree_node * root, int search_num){
 //最小值，查找树最左的值left_node  最大值则是反过来，查找树最右的值right_node
 // 查找迭代实现
 int find_min_num_iteration(tree_node * root){
-	if (root == NULL)
+	if (root == nullptr)
 	{
 		cout<<"this tree is empty!"<<endl;
 		return -1;
 	}
 
-	while (root->left_node != NULL)
+	while (root->left_node != nullptr)
 		root = root->left_node;
 	
 	return root->data;
@@ -57,11 +57,11 @@ int find_min_num_iteration(tree_node * root){
 
 //查找递归实现
 int find_min_num_recursion(tree_node * root){
-	if (root == NULL)
+	if (root == nullptr)
 		cout<<"this tree is empty!"<<endl;
 		return -1;
 
-	if(root->left_node == NULL)
+	if(root->left_node == nullptr)
 		return root->data;
 	
 	return find_min_num_recursion(root->left_node);
@@ -69,7 +69,7 @@ int find_min_num_recursion(tree_node * root){
 
 // 树的高度
 int find_tree_height(tree_node * root){
-	if (root == NULL)
+	if (root == nullptr)
 		return -1;
 
 	return (max(find_tree_height(root->left_node), find_tree_height(root->right_node)) + 1);
@@ -78,7 +78,7 @@ int find_tree_height(tree_node * root){
 // 树的层次遍历
 void level_order(tree_node * root){
 	queue<tree_node *> queue_obj;
-	if (root == NULL)
+	if (root == nullptr)
 		return;
 
 	//借助队列先进先出的特点，先发现的节点压入队列，再将其子节点压入队列（子节点出队前，将子节点的子节点压入队列），这样就有了层次顺序
@@ -86,9 +86,9 @@ void level_order(tree_node * root){
 	while (!queue_obj.empty()){
 		tree_node * temp_node = queue_obj.front();//获得当前队列，队首元素节点
 		cout<<temp_node->data<<" ";
-		if (temp_node->left_node != NULL)
+		if (temp_node->left_node != nullptr)
 			queue_obj.push(temp_node->left_node);//如果当前节点有左节点将其压入队列
-		if (temp_node->right_node != NULL)
+		if (temp_node->right_node != nullptr)
 			queue_obj.push(temp_node->right_node);//如果当前节点有右节点将其压入队列
 
 		queue_obj.pop();//将队首节点移出队列
@@ -100,7 +100,7 @@ void level_order(tree_node * root){
 //判断树是否是二叉搜索树
 //判断左子树是否比该节点值小
 bool bst_left_check(tree_node * root, int value){
-	if (root == NULL)
+	if (root == nullptr)
 		return true;
 
 	bool ret = (root->data <= value) && bst_left_check(root->left_node, value) && bst_left_check(root->right_node, value);
@@ -112,7 +112,7 @@ bool bst_left_check(tree_node * root, int value){
 
 //判断右子树是否比该节点值大
 bool bst_right_check(tree_node * root, int value){
-	if (root == NULL)
+	if (root == nullptr)
 		return true;
 
 	bool ret = (root->data > value) && bst_right_check(root->left_node, value) && bst_right_check(root->right_node, value);
@@ -123,7 +123,7 @@ bool bst_right_check(tree_node * root, int value){
 }
 
 bool is_bst_check(tree_node * root){
-	if (root == NULL)
+	if (root == nullptr)
 		return true;
 	
 	bool ret = is_bst_check(root->left_node) && is_bst_check(root->right_node) && bst_left_check(root->left_node, root->data) && bst_right_check(root->right_node, root->data);
@@ -135,7 +135,7 @@ bool is_bst_check(tree_node * root){
 
 //二叉树判断改进版本1（利用二叉搜索树特性，节点的左节点数值比节点小（可能相等），节点的右节点数值比节点大（可能相等），判断左子树和右子树都是是bst，整颗数都是bst，利用递归处理）
 bool bst_check(tree_node * root, int minvalue, int maxvalue){
-	if (root == NULL)
+	if (root == nullptr)
 		return true;
 
 	if (root->data < minvalue || root->data > maxvalue )
@@ -145,7 +145,7 @@ bool bst_check(tree_node * root, int minvalue, int maxvalue){
 }
 
 bool is_bst_check_better(tree_node * root){
-	if (root == NULL)
+	if (root == nullptr)
 		return true;
 
 	return bst_check(root, INT_MIN, INT_MAX);
@@ -154,13 +154,13 @@ bool is_bst_check_better(tree_node * root){
 // 二叉搜索树改进版本2（bst特性节点数值是排序好的，利用中序遍历，判断当前节点与前一个节点的值，当前节点的值必须要比前节点的值要大）
 //中序遍历
 bool inorder_node(tree_node *root, tree_node *pre_ptr){
-	if (root == NULL)
+	if (root == nullptr)
 		return INT_MIN;
 	
 	if(!inorder_node(root->left_node, pre_ptr))
 		return false;
 
-	if (pre_ptr != nullptr && root->data < pre_ptr->data)
+	if (pre_ptr != nullptrptr && root->data < pre_ptr->data)
 	{
 		return false;
 	}
@@ -170,7 +170,7 @@ bool inorder_node(tree_node *root, tree_node *pre_ptr){
 }
 
 bool check_inorder_bst(tree_node *root){
-	bool ret = inorder_node(root, nullptr);
+	bool ret = inorder_node(root, nullptrptr);
 	cout<<" ret is :";
 	return ret;
 }
@@ -184,34 +184,34 @@ bool check_inorder_bst(tree_node *root){
 */
 
 tree_node * find_min_node(tree_node * root){
-	if (root == nullptr)
+	if (root == nullptrptr)
 		return root;
 
-	while (root->left_node != nullptr)
+	while (root->left_node != nullptrptr)
 		root = root->left_node;
 	
 	return root;
 }
 
 tree_node * delete_node(tree_node * root, int num){
-	if (root == nullptr) return root;
+	if (root == nullptrptr) return root;
 
 	if (root->data == num)
 	{
 		//场景1
-		if (root->left_node == nullptr && root->right_node == nullptr)
+		if (root->left_node == nullptrptr && root->right_node == nullptrptr)
 		{
 			delete(root);
-			root = nullptr;
+			root = nullptrptr;
 		}
 		//场景2
-		else if (root->left_node == nullptr)
+		else if (root->left_node == nullptrptr)
 		{
 			tree_node * temp = root;
 			root = root->right_node;
 			delete(temp);
 		}
-		else if (root->right_node == nullptr)
+		else if (root->right_node == nullptrptr)
 		{
 			tree_node * temp = root;
 			root = root->left_node;
@@ -239,7 +239,7 @@ tree_node * delete_node(tree_node * root, int num){
 
 // 中序遍历(前中后的区别，以根节点所处位置计算，根左右:前序遍历, 左根右:中序遍历  左右根:后序遍历)
 void print_inorder(tree_node * root){
-	if (root == nullptr)
+	if (root == nullptrptr)
 		return;
 
 	print_inorder(root->left_node);
@@ -248,7 +248,7 @@ void print_inorder(tree_node * root){
 }
 
 int main(){
-	tree_node * TREE_ROOT = NULL;
+	tree_node * TREE_ROOT = nullptr;
 	int a[] = {10, 20, 3, 11, 12, 6, 5, 121, 11, 11};
 	int length = sizeof(a) / sizeof(a[0]);
 	for (int i = 0; i < length; i++)
