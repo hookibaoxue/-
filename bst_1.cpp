@@ -20,37 +20,24 @@ tree_node * get_new_node(int data){
 
 tree_node * tree_insert_node(tree_node * root, int data){
 	if (root == NULL)
-	{
 		root = get_new_node(data);
-	}
 	else if (data <= root->data)
-	{
 		root->left_node = tree_insert_node(root->left_node, data);
-	}
-	else{
+	else
 		root->right_node = tree_insert_node(root->right_node, data);
-	}
 
 	return root;
 }
 
 bool search_for_node(tree_node * root, int search_num){
 	if (root == NULL)
-	{
 		return false;
-	}
-
 	if (root->data == search_num)
-	{
 		return true;
-	}
 	else if (search_num <= root->data)
-	{
 		return search_for_node(root->left_node, search_num);
-	}
-	else{
+	else
 		return search_for_node(root->right_node, search_num);
-	}
 }
 
 //最小值，查找树最左的值left_node  最大值则是反过来，查找树最右的值right_node
@@ -63,9 +50,7 @@ int find_min_num_iteration(tree_node * root){
 	}
 
 	while (root->left_node != NULL)
-	{
 		root = root->left_node;
-	}
 	
 	return root->data;
 }
@@ -73,24 +58,19 @@ int find_min_num_iteration(tree_node * root){
 //查找递归实现
 int find_min_num_recursion(tree_node * root){
 	if (root == NULL)
-	{
 		cout<<"this tree is empty!"<<endl;
 		return -1;
-	}
 
 	if(root->left_node == NULL)
-	{
 		return root->data;
-	}
 	
 	return find_min_num_recursion(root->left_node);
 }
 
 // 树的高度
 int find_tree_height(tree_node * root){
-	if (root == NULL){
+	if (root == NULL)
 		return -1;
-	}
 
 	return (max(find_tree_height(root->left_node), find_tree_height(root->right_node)) + 1);
 }
@@ -98,21 +78,19 @@ int find_tree_height(tree_node * root){
 // 树的层次遍历
 void level_order(tree_node * root){
 	queue<tree_node *> queue_obj;
-	if (root == NULL){
+	if (root == NULL)
 		return;
-	}
 
 	//借助队列先进先出的特点，先发现的节点压入队列，再将其子节点压入队列（子节点出队前，将子节点的子节点压入队列），这样就有了层次顺序
 	queue_obj.push(root); //根节点压入队列
 	while (!queue_obj.empty()){
 		tree_node * temp_node = queue_obj.front();//获得当前队列，队首元素节点
 		cout<<temp_node->data<<" ";
-		if (temp_node->left_node != NULL){
+		if (temp_node->left_node != NULL)
 			queue_obj.push(temp_node->left_node);//如果当前节点有左节点将其压入队列
-		}
-		if (temp_node->right_node != NULL){
+		if (temp_node->right_node != NULL)
 			queue_obj.push(temp_node->right_node);//如果当前节点有右节点将其压入队列
-		}
+
 		queue_obj.pop();//将队首节点移出队列
 	}
 
@@ -161,9 +139,7 @@ bool bst_check(tree_node * root, int minvalue, int maxvalue){
 		return true;
 
 	if (root->data < minvalue || root->data > maxvalue )
-	{
 		return false;
-	}
 	
 	return bst_check(root->left_node, minvalue, root->data) && bst_check(root->right_node, root->data, maxvalue);
 }
@@ -182,11 +158,8 @@ bool inorder_node(tree_node *root, tree_node *pre_ptr){
 		return INT_MIN;
 	
 	if(!inorder_node(root->left_node, pre_ptr))
-	{
 		return false;
-	}
 
-cout<< root->data<<" ";
 	if (pre_ptr != nullptr && root->data < pre_ptr->data)
 	{
 		return false;
@@ -212,14 +185,10 @@ bool check_inorder_bst(tree_node *root){
 
 tree_node * find_min_node(tree_node * root){
 	if (root == nullptr)
-	{
 		return root;
-	}
 
 	while (root->left_node != nullptr)
-	{
 		root = root->left_node;
-	}
 	
 	return root;
 }
@@ -271,9 +240,7 @@ tree_node * delete_node(tree_node * root, int num){
 // 中序遍历(前中后的区别，以根节点所处位置计算，根左右:前序遍历, 左根右:中序遍历  左右根:后序遍历)
 void print_inorder(tree_node * root){
 	if (root == nullptr)
-	{
 		return;
-	}
 
 	print_inorder(root->left_node);
 	cout<<" "<<root->data;
@@ -315,9 +282,7 @@ int main(){
 		int flag;
 		cin>>flag;
 		if (flag != 1)
-		{
 			break;
-		}
 	}
 
 	return 0;
